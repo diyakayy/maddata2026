@@ -1,12 +1,8 @@
 """
-TAM AI Service — powered by Groq (free tier, no credit card required).
-Groq runs Llama 3.3 70B on custom LPU hardware — it's free AND faster than Claude.
+TAM AI Service — powered by Anthropic Claude.
+Uses Claude Sonnet for fast, high-quality financial analysis.
 
-Get your free API key at: https://console.groq.com
-Add to backend/.env:  GROQ_API_KEY=gsk_...
-
-This module exposes the same function signatures as the original claude_service.py
-so the rest of the codebase requires zero changes.
+Add to backend/.env:  ANTHROPIC_API_KEY=sk-ant-...
 """
 
 import json
@@ -15,36 +11,35 @@ from config import settings
 
 _client = None  # Lazy init
 
-MODEL = "llama-3.3-70b-versatile"   # Best free Groq model — 32k context
-FALLBACK_MODEL = "llama3-8b-8192"   # Faster, smaller, also free
+MODEL = "claude-sonnet-4-5-20250929"
 
 def _get_client():
     global _client
     if _client is None:
-        api_key = getattr(settings, "GROQ_API_KEY", None)
+        api_key = getattr(settings, "ANTHROPIC_API_KEY", None)
         if not api_key:
             raise ValueError(
-                "GROQ_API_KEY is not set. Get a free key at https://console.groq.com "
-                "and add GROQ_API_KEY=gsk_... to backend/.env"
+                "ANTHROPIC_API_KEY is not set. "
+                "Add ANTHROPIC_API_KEY=sk-ant-... to backend/.env"
             )
-        from groq import Groq
-        _client = Groq(api_key=api_key)
+        import anthropic
+        _client = anthropic.Anthropic(api_key=api_key)
     return _client
 
 
 def _chat(system: str, user: str, max_tokens: int = 4096, model: str = MODEL) -> str:
-    """Low-level call to Groq chat completions."""
+    """Low-level call to Anthropic messages API."""
     client = _get_client()
-    response = client.chat.completions.create(
+    response = client.messages.create(
         model=model,
         max_tokens=max_tokens,
+        system=system,
         messages=[
-            {"role": "system", "content": system},
-            {"role": "user",   "content": user},
+            {"role": "user", "content": user},
         ],
         temperature=0.1,  # Low temperature for deterministic financial analysis
     )
-    return response.choices[0].message.content
+    return response.content[0].text
 
 
 def _parse_json(text: str) -> dict | None:

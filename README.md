@@ -8,7 +8,7 @@ TAM (Transaction Analysis Machine) is a full-stack, AI-driven platform built for
 ---
 
 ## 🚀 Live Demo
-**Frontend Workspace:** [Insert Vercel Link Here]
+**Frontend Workspace:** 
 
 > **Deployment Note:** The Next.js frontend is production-ready on Vercel. However, the **TAM Neural Engine** (backend) requires high-compute environments for its ML models (`scikit-learn`, `chromadb`) and dynamic PDF generation (`playwright`). To experience the full end-to-end pipeline, the backend is best run in a Dockerized environment or locally.
 
@@ -25,7 +25,7 @@ Using a hybrid approach of **Hugging Face Transformers** (fine-tuned for financi
 We use a **Scikit-Learn Isolation Forest** model to detect outliers. Unlike simple rule-based systems, this unsupervised ML model looks at the *combination* of metrics (e.g., high revenue growth vs. low receivables turnover) to flag statistical anomalies that might indicate earnings manipulation or data quality issues.
 
 ### 3. Agentic Extraction Workflow
-The extraction process is **self-correcting**. If the initial LLM pass (Claude 3.5 Sonnet) returns a "sparse" result (too many missing fields), the system triggers an autonomous **Self-Refinement Loop**.
+The extraction process is **self-correcting**. If the initial LLM pass (Claude 4.5 Sonnet) returns a "sparse" result (too many missing fields), the system triggers an autonomous **Self-Refinement Loop**.
 
 ![Agentic Workflow](./docs/images/workflow.png)
 
@@ -43,7 +43,7 @@ TAM is built with a decoupled, high-performance architecture designed for scale.
 *   **Backend:** FastAPI (Python), SQLAlchemy, Pydantic.
 *   **Data Store:** SQLite (Relational) + ChromaDB (Vector Database for RAG-powered Q&A).
 *   **Intelligence:** 
-    *   **Anthropic API:** Claude 3.5 Sonnet for reasoning and narrative generation.
+    *   **Anthropic API:** Claude 4.5 Sonnet for reasoning and narrative generation.
     *   **ML Engine:** Scikit-Learn (Isolation Forest, StandardScaler), Hugging Face Transformers.
 *   **Report Generation:** Playwright (Headless Chromium) renders specialized Tailwind templates into industry-grade PDFs.
 
@@ -89,6 +89,18 @@ Create a `.env` in `backend/` with your credentials:
 ```env
 ANTHROPIC_API_KEY=sk-ant-api03-...
 ```
+
+---
+
+## Team
+
+Built for **MadData 2026** by:
+
+| Name | Major |
+|------|-------|
+| **Yash Arvind** | B.S. in Data Science & Economics |
+| **Diya Kothari** | B.S. in Data Science & Economics |
+| **Hriday Thakkar** | B.S. in Computer Science & Math |
 
 ---
 *Built to automate the future of M&A.*

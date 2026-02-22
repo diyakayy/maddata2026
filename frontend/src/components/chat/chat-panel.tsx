@@ -346,7 +346,7 @@ export default function ChatPanel({ dealId }: Props) {
                     </div>
                     <div>
                         <h2 className="text-sm font-bold tracking-tight">TAM AI Analyst</h2>
-                        <p className="text-[11px] text-slate-400">Powered by Groq · Llama 3.3 70B · RAG over your documents</p>
+                        <p className="text-[11px] text-slate-400">Powered by Claude · Anthropic · RAG over your documents</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-3">
