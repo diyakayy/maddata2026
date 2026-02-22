@@ -35,7 +35,7 @@ export default function OverviewTab({ deal, insights, qoe, wc, ratios }: Props) 
     const formatB = (v: number) => `$${(v / 1_000_000_000).toFixed(1)}B`;
     const fv = (v: number) => v > 1000000000 ? formatB(v) : formatM(v);
 
-    const rev = qoe ? (qoe.reported_ebitda / (qoe.ebitda_margin / 100)) : 63700000;
+    const rev = (qoe && qoe.ebitda_margin && qoe.ebitda_margin > 0) ? (qoe.reported_ebitda / (qoe.ebitda_margin / 100)) : 63700000;
     const repEbitda = qoe?.reported_ebitda || 12200000;
     const adjEbitda = qoe?.adjusted_ebitda || 13400000;
 
